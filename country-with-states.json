@@ -1009,6 +1009,13 @@
           "states": ["Aveiro", "Acores", "Beja", "Braga", "Braganca", "Castelo Branco", "Coimbra", "Evora", "Faro", "Guarda", "Leiria", "Lisboa", "Madeira", "Portalegre", "Porto", "Santarem", "Setubal", "Viana do Castelo", "Vila Real", "Viseu"]
         },
         {
+          "country": "Puerto Rico",
+          "alpha2Code": "PR",
+          "alpha3Code": "PRI",
+          "numberCode": "630",
+          "states": ["Adjuntas","Aguada","Aguadilla","Aguas Buena","Aibonito","Añasco","Arecibo","Arroyo","Barceloneta","Barranquitas","Bayamón", "Cabo Rojo","Caguas","Camuy","Canovanas","Carolina","Cataño","Cayey","Ceiba","Ciales","Cidra","Coamo","Comerío"," Corozal","Culebra (Island municipality)","Dorado","Fajardo","Florida","Guánica","Guayama","Guayanilla","Guaynabo","Gurabo","Hatillo","Hormigueros" ,"Humacao","Isabela","Jayuya","Juana Díaz","Juncos","Lajas","Lares","Las Marías","Las Piedras","Loíza","Luquillo","Manatee ","Maricao","Maunabo","Mayagüez","Moca","Morovis","Naguabo","Naranjito","Orocovis","Patillas","Peñuelas","Ponce","Quebradillas", "Rincón","Río Grande","Sabana Grande","Salinas","San Germán","San Juan (Capital)","San Lorenzo","San Sebastián","Santa Isabel","Toa Alta","Toa Baja","Trujillo Alto","Utuado","Vega Alta","Vega Baja","Vieques (Island municipality)","Villalba","Yabucoa","Yauco"]
+        },
+        {
           "country": "Qatar",
           "alpha2Code": "QA",
           "alpha3Code": "QAT",
