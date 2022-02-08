@@ -127,7 +127,7 @@ function reloadCountries(language) {
 		.then(function (json){
 			console.log(json);
 			autocomplete(document.getElementById("myCountry"), json);
-		});
+		})
 		.catch(function() {
 			// This is where you run code if the server returns any errors
 		});
