@@ -87,10 +87,6 @@ $.getJSON( "translations/" +  language + ".json", function( data ) {
 
 $(document ).ready(function() {
 
-	$.ajaxPrefilter( "json script", function( options ) {
-  options.crossDomain = true;
-});
-
     $('input[type=radio][name=language]').on('change', function() {
 		loadCountries();
 	});
