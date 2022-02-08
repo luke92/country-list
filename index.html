@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Dropdownlists with Countries and States</title>
+		<meta charset="utf-8">
+		  <meta name="viewport" content="width=device-width, initial-scale=1">
+		  <!-- Font Awesome -->
+			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+			<!-- Google Fonts -->
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+			<!-- Bootstrap core CSS -->
+			<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+			<!-- Material Design Bootstrap -->
+			<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+			
+						<!-- JQuery -->
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+			<!-- Bootstrap tooltips -->
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+			<!-- Bootstrap core JavaScript -->
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+			<!-- MDB core JavaScript -->
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+			<script type="text/javascript" src="autocomplete.js"></script> 
+	</head>
+	<body>
+		<div class="container">
+			<h1>Country List with States in dropdown lists with different languages</h1>
+			
+			  
+				  <h3>Select Language</h3>
+				  <!-- Group of default radios - option 1 -->
+				<div class="custom-control custom-radio">
+				  <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="language" value="es" checked>
+				  <label class="custom-control-label" for="defaultGroupExample1">Spanish</label>
+				</div>
+
+				<!-- Group of default radios - option 2 -->
+				<div class="custom-control custom-radio">
+				  <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="language" value="en">
+				  <label class="custom-control-label" for="defaultGroupExample2">English</label>
+				</div>
+
+				<!-- Group of default radios - option 3 -->
+				<div class="custom-control custom-radio">
+				  <input type="radio" class="custom-control-input" id="defaultGroupExample3" name="language" value="pt">
+				  <label class="custom-control-label" for="defaultGroupExample3">Portuguese</label>
+				</div>
+				
+				<!-- Group of default radios - option 3 -->
+				<div class="custom-control custom-radio">
+				  <input type="radio" class="custom-control-input" id="defaultGroupExample4" name="language" value="it">
+				  <label class="custom-control-label" for="defaultGroupExample4">Italian</label>
+				</div>
+				
+				<div class="custom-control custom-radio">
+				  <input type="radio" class="custom-control-input" id="defaultGroupExample5" name="language" value="fr">
+				  <label class="custom-control-label" for="defaultGroupExample5">France</label>
+				</div>
+			<div class="md-form autocomplete">
+				<input type="search" id="form-autocomplete-country" class="form-control mdb-autocomplete" />
+				 <label for="form-autocomplete-country" class="active">Country</label>
+			</div>
+			
+			<div class="md-form">
+				<input type="search" id="form-autocomplete-state" class="form-control mdb-autocomplete" />
+				 <label for="form-autocomplete-state" class="active">State</label>
+			</div>
+		</div>
+<script>
+
+function loadCountries() {
+/*An array containing all the country names in the world:*/
+var countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre & Miquelon","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","St Kitts & Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Turks & Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
+
+/*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+autocomplete(document.getElementById("form-autocomplete-country"), countries);
+
+var language = $('input[name="language"]:checked').val();
+
+$.getJSON( "translations/" +  language + ".json", function( data ) {
+  var countries = data;
+  autocomplete(document.getElementById("form-autocomplete-country"), countries);
+});
+}
+
+$(document ).ready(function() {
+
+	$.ajaxPrefilter( "json script", function( options ) {
+  options.crossDomain = true;
+});
+
+    $('input[type=radio][name=language]').on('change', function() {
+		loadCountries();
+	});
+	
+	loadCountries();
+});
+
+		</script>
+	</body>
+</html>
