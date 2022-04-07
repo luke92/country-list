@@ -107,6 +107,9 @@ input[type=submit] {
   <div class="truecomplete" style="width:300px;">
     <input id="myCountry" type="text" name="myCountry" placeholder="Country">
   </div>
+  <div class="truecomplete" style="width:300px;">
+    <input id="myState" type="text" name="myState" placeholder="State">
+  </div>
 </form>
 
 <script>
@@ -118,8 +121,13 @@ var countries = [];
 /*initiate the truecomplete function on the "myCountry" element, and pass along the countries array as possible truecomplete values:*/
 truecomplete(document.getElementById("myCountry"), countries);
 
+var states = [];
+truecomplete(document.getElementById("myState"), states);
+
 var language = document.querySelector("[name=language]:checked").value;
-reloadCountries(language);
+//reloadCountries(language);
+
+var fullJson = null;
 
 function reloadCountries(language) {
 	fetch("translations/" +  language + ".json") // Call the fetch function passing the url of the API as a parameter
@@ -128,14 +136,56 @@ function reloadCountries(language) {
 		})
 		.then(function (json){
 			console.log(json);
-			truecomplete(document.getElementById("myCountry"), json);
+			reloadCountriesWithJson(json);
 		})
 		.catch(function() {
 			// This is where you run code if the server returns any errors
 		});
 }
 
-function truecomplete(inp, arr) {
+function reloadCountriesWithJson(json){
+	fullJson = json;
+	var countryList = json.countries.map(function(item) { 
+		return item['country']; 
+	});
+	checkStatesInJson(json);
+	var stateList = json.countries.map(function(item) { 
+		return item['states']; 
+	});
+	var countryElement = document.getElementById("myCountry");
+	var stateElement = document.getElementById("myState");
+	countryElement.value = '';
+	countryElement.focus();
+	truecomplete(countryElement, countryList, stateElement);
+}
+
+function checkStatesInJson(json) {
+	for( i = 0; i < json.countries.length; i++ ){
+		var states = json.countries[i].states;
+		try {
+			if (states.length == 0) {
+			console.log('Empty in index ' + i);
+			console.log(json.countries[i]);
+		  }
+		}
+		catch (e) {
+			console.log(e);
+			console.log('Error in index ' + i);
+			console.log(json.countries[i]);
+		}
+	}
+}
+
+function reloadStatesWithJson(country, json) {
+	var countryObject = json.countries.filter(function(element) { 
+		return element.country == country; 
+	});
+	
+	var stateList = countryObject[0].states;
+	truecomplete(document.getElementById("myState"), stateList);
+}
+
+function truecomplete(inp, arr, subInput = null) {
 	var myobj = document.getElementById("truecomplete-list");
 	if(myobj !== null)
 		myobj.remove();
@@ -156,27 +206,46 @@ function truecomplete(inp, arr) {
       /*append the DIV element as a child of the truecomplete container:*/
       this.parentNode.appendChild(a);
       /*for each item in the array...*/
-      for (i = 0; i < arr.length; i++) {
-        /*check if the item starts with the same letters as the text field value:*/
-        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-          /*create a DIV element for each matching element:*/
-          b = document.createElement("DIV");
-          /*make the matching letters bold:*/
-          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-          b.innerHTML += arr[i].substr(val.length);
-          /*insert a input field that will hold the current array item's value:*/
-          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-          /*execute a function when someone clicks on the item value (DIV element):*/
-          b.addEventListener("click", function(e) {
-              /*insert the value for the truecomplete text field:*/
-              inp.value = this.getElementsByTagName("input")[0].value;
-              /*close the list of truecompleted values,
-              (or any other open lists of truecompleted values:*/
-              closeAllLists();
-          });
-          a.appendChild(b);
-        }
-      }
+	  var indexError = 0;
+	  var elementError = null;
+	  try {
+		for (i = 0; i < arr.length; i++) {
+		  indexError = i;
+		  elementError = arr[i];
+		  /*check if the item starts with the same letters as the text field value:*/
+		  if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+		  /*create a DIV element for each matching element:*/
+		  b = document.createElement("DIV");
+		  /*make the matching letters bold:*/
+		  b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+		  b.innerHTML += arr[i].substr(val.length);
+		  /*insert a input field that will hold the current array item's value:*/
+		  b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+		  /*execute a function when someone clicks on the item value (DIV element):*/
+		  b.addEventListener("click", function(e) {
+			  /*insert the value for the truecomplete text field:*/
+			  inp.value = this.getElementsByTagName("input")[0].value;
+			  /*close the list of truecompleted values,
+			  (or any other open lists of truecompleted values:*/
+			  closeAllLists();
+			  
+			  if(subInput) {
+				subInput.value = '';
+				subInput.focus();
+				reloadStatesWithJson(inp.value, fullJson);
+			  }
+				
+		  });
+		  a.appendChild(b);
+		  }
+		}     
+	  }
+	  catch (e) {
+		console.log(e);
+		console.log(indexError);
+		console.log(elementError);
+	  }
+      
   });
   /*execute a function presses a key on the keyboard:*/
   inp.addEventListener("keydown", function(e) {
